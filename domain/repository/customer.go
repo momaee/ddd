@@ -14,7 +14,7 @@ func NewCustomerRepo(integration *Integration) *CustomerRepo {
 }
 
 // FindById returns a customer by id
-func (r *CustomerRepo) FindById(id int) (*en.Customer, error) {
+func (r *CustomerRepo) FindById(id int) (*en.Customer, error) { // CustomerByID
 	// main logic is here
 	return r.integration.crm.GetCustomerByID(id)
 }

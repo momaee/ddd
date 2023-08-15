@@ -1,4 +1,4 @@
-package application
+package server
 
 import (
 	"ddd/integration/salesforce"
@@ -11,14 +11,14 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-// Application is a struct for application
-type Application struct {
+// Server is a struct for server
+type Server struct {
 	e     *echo.Echo
 	repos repo.Repositories
 }
 
-// New is a constructor for Application
-func New() *Application {
+// New is a constructor for Server
+func New() *Server {
 	// build vendors
 	crm := salesforce.New()
 
@@ -28,15 +28,15 @@ func New() *Application {
 	// build repositories by integration
 	repos := *repo.NewRepositories(integration)
 
-	// build application by repositories
-	return &Application{
+	// build server by repositories
+	return &Server{
 		e:     echo.New(),
 		repos: repos,
 	}
 }
 
 // Start is a method for starting application
-func (a *Application) Start() {
+func (a *Server) Start() {
 	// Middleware
 	a.e.Use(middleware.Logger())
 	a.e.Use(middleware.Recover())
@@ -51,11 +51,11 @@ func (a *Application) Start() {
 
 // ------------------------------ < Handlers > ------------------------------
 
-func (a *Application) hello(c echo.Context) error {
+func (a *Server) hello(c echo.Context) error {
 	return c.String(http.StatusOK, "Hello, World!")
 }
 
-func (a *Application) getCustomerByID(c echo.Context) error {
+func (a *Server) getCustomerByID(c echo.Context) error {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err)

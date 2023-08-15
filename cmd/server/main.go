@@ -1,10 +1,10 @@
 package main
 
-import "ddd/application"
+import app "ddd/application"
 
 func main() {
 
-	app := application.New()
+	app := app.New()
 
 	app.Start()
 }

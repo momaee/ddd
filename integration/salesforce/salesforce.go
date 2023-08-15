@@ -5,11 +5,15 @@ import (
 	repo "ddd/domain/repository"
 )
 
+// Salesforce implements the CRM interface
 var _ repo.CRM = &Salesforce{}
 
+// Salesforce is a CRM
 type Salesforce struct {
+	// TODO: add salesforce client
 }
 
+// New returns a new Salesforce CRM
 func New() *Salesforce {
 	return &Salesforce{}
 }

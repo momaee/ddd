@@ -11,11 +11,13 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
+// Application is a struct for application
 type Application struct {
 	e     *echo.Echo
 	repos repo.Repositories
 }
 
+// New is a constructor for Application
 func New() *Application {
 	// build vendors
 	crm := salesforce.New()
@@ -24,7 +26,6 @@ func New() *Application {
 	integration := repo.NewIntegration(crm, nil)
 
 	// build repositories by integration
-
 	repos := *repo.NewRepositories(integration)
 
 	// build application by repositories
@@ -34,6 +35,7 @@ func New() *Application {
 	}
 }
 
+// Start is a method for starting application
 func (a *Application) Start() {
 	// Middleware
 	a.e.Use(middleware.Logger())
@@ -47,7 +49,8 @@ func (a *Application) Start() {
 	a.e.Logger.Fatal(a.e.Start(":1323"))
 }
 
-// Handler
+// ------------------------------ < Handlers > ------------------------------
+
 func (a *Application) hello(c echo.Context) error {
 	return c.String(http.StatusOK, "Hello, World!")
 }
